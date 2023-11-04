@@ -2,11 +2,11 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-from dotenv import load_dotenv,find_dotenv
+# from dotenv import load_dotenv,find_dotenv
 import os
 
 # Connect the path with your '.env' file name
-load_dotenv(find_dotenv())
+# load_dotenv(find_dotenv())
 
 
 def main():
