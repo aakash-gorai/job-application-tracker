@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+  <!-- <div class="col-md-9 offset-md-3"> -->
+  {% if user.is_authenticated %}
+    <h1>Applications</h1>
+    <br />
+    {% if records %}
+      <table class="table text-center table-hover table-bordered">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">Company Name</th>
+            <th scope="col">Role</th>
+            <th scope="col">Application Date</th>
+            <th scope="col">Location</th>
+            <th scope="col">Current Status</th>
+            <th scope="col">View</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for record in records %}
+            <tr>
+              <td>{{ record.company_name }}</td>
+              <td>{{ record.role }}</td>
+              <td>{{ record.application_date }}</td>
+              <td>{{ record.location }}</td>
+              <td>{{ record.current_status }}</td>
+              <td>
+                <a href="{% url 'record' record.id %}">Click Here</a>
+              </td>
+            </tr>
+            <!-- <br /> -->
+          {% endfor %}
+        {% else %}
+          <h5>No Applications Found..!</h5>
+          <br />
+        {% endif %}
+      </tbody>
+    </table>
+    <!-- </div> -->
+  {% else %}
+    <br>
+    <br>
+    <div class="card text-center ">
+      <div class="card-header">
+        <strong>Welcome Buddy</strong>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Please Login or Register</h5>
+        <br>
+        <p class="card-text">You can track all your job application records with this Amazing App.</p>
+        <br>
+        <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+        <a href="{% url 'register' %}" class="btn btn-secondary">Register</a>
+      {% endif %}
+    {% endblock %}
