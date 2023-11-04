@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-# from dotenv import load_dotenv,find_dotenv
+from dotenv import load_dotenv,find_dotenv
 import os
 
 # load_dotenv(find_dotenv())
@@ -34,7 +34,7 @@ SECRET_KEY = 'django-insecure-pw@mwbps(&+rhpdw%ewab46e03be#o6@@b8e+mexr*qb(3170g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = ['.vercel.app', '.now.sh']
 
 
 # Application definition
@@ -135,3 +135,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
