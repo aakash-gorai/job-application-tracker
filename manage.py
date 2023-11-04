@@ -2,11 +2,20 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from dotenv import load_dotenv,find_dotenv
+import os
+
+# Connect the path with your '.env' file name
+load_dotenv(find_dotenv())
 
 
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'crm.settings')
+    # print(os.environ.get('PASSWORD'))
+    # print(os.environ.get('HOST'))
+    # print(os.environ.get('PORT'))
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
