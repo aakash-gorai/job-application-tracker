@@ -3,10 +3,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import SignUpForm,AddRecordForm
 from .models import Record
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 def home(request):
     #getting data from the database
-    records = Record.objects.all()
+    records = Record.objects.filter(user=request.user.id)
     #checking if user is logging in
     if request.method == 'POST' :
         username = request.POST['username']
@@ -77,17 +79,22 @@ def delete_record(request,pk):
         return redirect('home')
 
 def add_record(request):
-	form = AddRecordForm(request.POST or None)
-	if request.user.is_authenticated:
-		if request.method == "POST":
-			if form.is_valid():
-				add_record = form.save()
-				messages.success(request, "Record Added, Thank You !")
-				return redirect('home')
-		return render(request, 'add_record.html', {'form':form})
-	else:
-		messages.success(request, "Please Login to view this page, Thank You !")
-		return redirect('home')
+    form = AddRecordForm(request.POST or None)
+
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            if form.is_valid():
+                add_record = form.save(commit=False)
+                add_record.user = request.user
+                add_record.save()
+                messages.success(request, "Record Added, Thank You !")
+                return redirect('home')
+
+        return render(request, 'add_record.html', {'form': form})
+    else:
+        messages.success(
+            request, "Please Login to view this page, Thank You !")
+        return redirect('home')
 
 def update_record(request, pk):
 	if request.user.is_authenticated:
